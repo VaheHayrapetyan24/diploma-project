@@ -7,7 +7,7 @@ const HttpError = require('../errors/httpError');
 const FORBIDDEN_MESSAGE = 'Forbidden. Email or password is invalid';
 const EMPTY_PASSWORD = 'Forbidden. Empty password not allowed';
 
-class UserService extends BaseService {
+class UsersService extends BaseService {
   constructor(ctx) {
     super(ctx);
     this.model = ctx.model.Users;
@@ -70,4 +70,4 @@ class UserService extends BaseService {
   }
 }
 
-module.exports = UserService;
+module.exports = UsersService;

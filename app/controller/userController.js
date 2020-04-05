@@ -1,13 +1,13 @@
 const { omit } = require('lodash');
 const BaseController = require('./base/baseController');
-const { userValidation } = require('../validation');
+const { usersValidation } = require('../validation');
 
 class UserController extends BaseController {
   constructor(ctx) {
     super(ctx);
     this.model = ctx.model.Users;
     this.name = 'user';
-    this.mainService = ctx.service.userService;
+    this.mainService = ctx.service.usersService;
   }
 
   async getUser() {
@@ -17,7 +17,7 @@ class UserController extends BaseController {
   }
 
   async signup() {
-    this.validate(userValidation.signup);
+    this.validate(usersValidation.signup);
     const { request: { body } } = this.ctx;
     const user = await this.mainService.signup(body);
     const transformedUser = this.removePasswordInfo(user);
@@ -25,14 +25,14 @@ class UserController extends BaseController {
   }
 
   async login() {
-    this.validate(userValidation.login);
+    this.validate(usersValidation.login);
     const { request: { body } } = this.ctx;
     const jwt = await this.mainService.login(body);
     this.success(jwt);
   }
 
   async changePassword() {
-    this.validate(userValidation.changePassword);
+    this.validate(usersValidation.changePassword);
     const { request: { body } } = this.ctx;
     const { user } = this.ctx.state;
     await this.mainService.changeUserPassword(user, body.oldPassword, body.newPassword);

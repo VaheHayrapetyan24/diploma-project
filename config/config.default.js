@@ -12,6 +12,9 @@ module.exports = appInfo => {
 
   config.authorize = {
     ignore: [ '/users/signup', '/users/login' ],
+    adminRoutes: [
+      { path: '/stations', methods: [ 'POST', 'PATCH', 'DELETE' ] },
+    ],
   };
 
   config.mongoose = {
