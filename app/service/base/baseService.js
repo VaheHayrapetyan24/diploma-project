@@ -33,7 +33,7 @@ class BaseService extends Service {
     return this.model.bulkWrite(operations);
   }
 
-  async checkAndFindById(id, projection) {
+  async findByIdOrThrow(id, projection) {
     const entity = await this.findById(id, projection);
     if (!entity) {
       throw new HttpError(404, `Record with ${id} in collection ${this.name} not found`);
@@ -42,7 +42,7 @@ class BaseService extends Service {
     return entity;
   }
 
-  async checkAndFindOne(query, projection) {
+  async findOrThrow(query, projection) {
     const entity = await this.findOne(query, projection);
     if (!entity) {
       throw new HttpError(404, `Record in collection ${this.name} not found`);

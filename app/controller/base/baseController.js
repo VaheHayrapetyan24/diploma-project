@@ -55,22 +55,15 @@ class BaseController extends Controller {
   }
 
   async show() {
-    const record = await this.mainService.checkPermissionToEntity(this.ctx.params.id);
-    if (!record) {
-      return this.notFound(this.name);
-    }
-
+    const { id } = this.ctx.params;
+    const record = await this.mainService.findByIdOrThrow(id);
     this.success(this.transformEntry(record));
   }
 
   async destroy() {
     const { id } = this.ctx.params;
-    await this.mainService.checkPermissionToEntity(id);
-
-    await this.model.deleteOne({ _id: id }).catch(() => {
-      this.notFound(this.name);
-    });
-
+    await this.mainService.findByIdOrThrow(id);
+    await this.model.deleteOne({ _id: id });
     this.success({ id });
   }
 

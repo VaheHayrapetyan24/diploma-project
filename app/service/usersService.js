@@ -42,7 +42,7 @@ class UsersService extends BaseService {
   }
 
   async login({ email, password }) {
-    const user = await this.checkAndFindOne({ email });
+    const user = await this.findOrThrow({ email });
     this.checkPassword(user, password);
 
     return this.getSignedJWT(user);
