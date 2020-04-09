@@ -1,0 +1,41 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: 5c5d5ba647b04ac33778881f
+  email:
+    type: string
+    example: example@mail.com
+  fileFormat:
+    type: string
+    enum:
+      - 'wav'
+      - 'mp3'
+  name:
+    type: string
+    example: John Johnson
+  unsubscribedFrom:
+    type: array
+    items:
+      type: string
+      example: 5c5d5ba647b04ac33778881f
+  blacklisted:
+    type: date
+    example: 2019-11-29T07:57:30.625Z
+  blacklistType:
+    type: sting
+    enum:
+      - 'AWS_BOUNCE'
+      - 'AWS_COMPLAIN'
+  lastBounceAt:
+    type: date
+    example: 2019-11-29T07:57:30.625Z
+  bounceCount:
+    type: number
+    example: 6
+  state:
+    type: string
+    enum:
+      - 'active'
+      - 'complaint'
+      - 'invalid'

@@ -1,0 +1,11 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: 5c5d5ba647b04ac33778881f
+  name:
+    type: string
+    example: Asa Akira
+  email:
+    type: string
+    example: example@mail.com

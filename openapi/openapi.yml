@@ -1,0 +1,23 @@
+openapi: 3.0.1
+info:
+  description: ""
+  version: 1.0.0
+  title: Transportation Control Panel API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: vahe.hayrapetyanusa@gmail.com
+servers:
+  - url: 'https://localhost:7001'
+    description: Local server
+tags:
+- name: HealthCheck
+  description: Check service availability
+- name: Users
+  description: User routes
+paths:
+  $ref: './paths/index.yml'
+components:
+  parameters:
+    $ref: 'components/parameters/index.yml'
+  schemas:
+    $ref: 'components/schemas/index.yml'

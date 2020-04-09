@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = appInfo => {
   const config = exports = {};
 
@@ -11,7 +13,7 @@ module.exports = appInfo => {
   config.middleware = [ 'authorize' ];
 
   config.authorize = {
-    ignore: [ '/users/signup', '/users/login' ],
+    ignore: [ '/users/signup', '/users/login', '/public' ],
     adminRoutes: [
       { path: '/stations', methods: [ 'POST', 'PATCH', 'DELETE' ] },
     ],
@@ -22,6 +24,21 @@ module.exports = appInfo => {
       url: 'mongodb://localhost:27017/busservice',
       options: {},
       migrationUrl: 'mongodb://localhost:27017/busservice',
+    },
+  };
+
+  config.static = {
+    prefix: '/public',
+    dir: path.join(appInfo.baseDir, 'app/public'),
+    dynamic: true,
+  };
+
+
+  config.view = {
+    defaultViewEngine: 'ejs',
+    defaultExtension: '.ejs',
+    mapping: {
+      '.ejs': 'ejs',
     },
   };
 

@@ -1,0 +1,4 @@
+HealthStatus:
+  $ref: './healthStatus.yml'
+User:
+  $ref: './user.yml'

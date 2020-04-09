@@ -1,0 +1,201 @@
+openapi: 3.0.1
+info:
+  description: ''
+  version: 1.0.0
+  title: Transportation Control Panel API
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: vahe.hayrapetyanusa@gmail.com
+servers:
+  - url: 'https://localhost:7001'
+    description: Local server
+tags:
+  - name: HealthCheck
+    description: Check service availability
+  - name: Users
+    description: User routes
+paths:
+  /health:
+    get:
+      tags:
+        - HealthCheck
+      summary: Return service status and version
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+        '500':
+          description: Internal Server error
+  /pools:
+    $ref: ./pools/pools.yml
+  '/pools/{poolId}':
+    $ref: ./pools/poolsById.yml
+  /users/signup:
+    post:
+      tags:
+        - Users
+      summary: Sign up
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  required: true
+                  example: Johnny Sins
+                email:
+                  type: string
+                  required: true
+                  example: lisa@ann.com
+                password:
+                  type: string
+                  requried: true
+                  example: notashithead
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/login:
+    post:
+      tags:
+        - Users
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  required: true
+                  example: lisa@ann.com
+                password:
+                  type: string
+                  requried: true
+                  example: notashithead
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: agljhrsegljkzdnverjrnvgkerlg
+  /users/me:
+    get:
+      tags:
+        - Users
+      summary: Get logged in user
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/changepassword:
+    post:
+      tags:
+        - Users
+      summary: Change password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                  required: true
+                  example: definitelyashithead
+                newPassword:
+                  type: string
+                  requried: true
+                  example: notashithead
+      responses:
+        '200':
+          description: OK
+components:
+  parameters:
+    limitParam:
+      in: query
+      name: limit
+      description: The number of returned entities per request. Defaults to 30
+      example: 30
+      schema:
+        type: number
+    skipParam:
+      in: query
+      name: skip
+      description: The number of entities to skip. Defaults to 0
+      example: 0
+      schema:
+        type: number
+    lastIdParam:
+      name: lastId
+      in: query
+      description: Last processed id. Used for pagination
+      default: 0
+      schema:
+        type: string
+    searchParam:
+      name: search
+      in: query
+      description: Free text search. Pagination applied
+      default: 0
+      schema:
+        type: string
+    fieldsParam:
+      name: fields
+      in: query
+      description: See query-to-mongo. Comma separated projection fields
+      schema:
+        type: string
+    sortParam:
+      name: sort
+      in: query
+      description: See query-to-mongo. Sort fields and direction
+      schema:
+        type: string
+    contractIdParam:
+      name: contract-id
+      in: header
+      required: true
+      description: Current contract id
+      schema:
+        type: string
+        example: 5c9b9239f1449405c952d457
+    authorization:
+      name: Authorization
+      in: header
+      required: true
+      description: JWT token
+      schema:
+        type: string
+        example: Bearer <JWT_Token>
+  schemas:
+    HealthStatus:
+      $ref: ./healthStatus.yml
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        name:
+          type: string
+          example: Asa Akira
+        email:
+          type: string
+          example: example@mail.com

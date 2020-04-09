@@ -14,6 +14,9 @@
     "egg-mongoose": "^3.2.0",
     "egg-scripts": "^2.11.0",
     "egg-validate": "^2.0.2",
+    "egg-static": "^2.2.0",
+    "egg-view-ejs": "^2.0.0",
+    "ejs": "^2.7.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.8.11",
     "password-generator": "^2.2.3",
@@ -26,7 +29,8 @@
     "egg-ci": "^1.11.0",
     "egg-mock": "^3.21.0",
     "eslint": "^5.13.0",
-    "eslint-config-egg": "^7.1.0"
+    "eslint-config-egg": "^7.1.0",
+    "swagger-merger": "^1.4.3"
   },
   "engines": {
     "node": ">=10.0.0"
@@ -41,7 +45,8 @@
     "cov": "egg-bin cov",
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
-    "autod": "autod"
+    "autod": "autod",
+    "generate-docs": "swagger-merger -i openapi/openapi.yml -o app/public/openapi.yml"
   },
   "ci": {
     "version": "10"

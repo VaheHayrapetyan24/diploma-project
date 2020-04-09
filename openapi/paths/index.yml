@@ -1,0 +1,11 @@
+/health:
+  $ref: './healthStatus.yml'
+
+/users/signup:
+  $ref: './users/signup.yml'
+/users/login:
+  $ref: './users/login.yml'
+/users/changepassword:
+  $ref: './users/changepassword.yml'
+/users/me:
+  $ref: './users/me.yml'

@@ -7,4 +7,6 @@ module.exports = app => {
   router.post('/users/changepassword', controller.userController.changePassword);
 
   router.resources('/stations', controller.stationsController);
+
+  router.get('/public/documentation', controller.documentationController.index);
 };
