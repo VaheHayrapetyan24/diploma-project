@@ -13,7 +13,13 @@ tags:
   - name: HealthCheck
     description: Check service availability
   - name: Users
-    description: User routes
+    description: User endpoints
+  - name: Stations
+    description: Station endpoints
+  - name: Buses
+    description: Bus endpoints
+  - name: Routes
+    description: Route endpoints
 paths:
   /health:
     get:
@@ -29,10 +35,6 @@ paths:
                 $ref: '#/components/schemas/HealthStatus'
         '500':
           description: Internal Server error
-  /pools:
-    $ref: ./pools/pools.yml
-  '/pools/{poolId}':
-    $ref: ./pools/poolsById.yml
   /users/signup:
     post:
       tags:
@@ -90,20 +92,6 @@ paths:
               schema:
                 type: string
                 example: agljhrsegljkzdnverjrnvgkerlg
-  /users/me:
-    get:
-      tags:
-        - Users
-      summary: Get logged in user
-      parameters:
-        - $ref: '#/components/parameters/authorization'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
   /users/changepassword:
     post:
       tags:
@@ -126,6 +114,303 @@ paths:
       responses:
         '200':
           description: OK
+  /users/me:
+    get:
+      tags:
+        - Users
+      summary: Get logged in user
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /stations:
+    get:
+      tags:
+        - Stations
+      summary: Get stations
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Station'
+    post:
+      tags:
+        - Stations
+      summary: Create a station
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                readableAddress:
+                  type: string
+                  example: Somewhere
+                latitude:
+                  type: number
+                  example: 38.8951
+                longitude:
+                  type: number
+                  example: 38.8951
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Station'
+  '/stations/:id':
+    get:
+      tags:
+        - Stations
+      summary: Get station by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Station'
+    patch:
+      tags:
+        - Stations
+      summary: Patch a station by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                readableAddress:
+                  type: string
+                  example: Somewhere
+                latitude:
+                  type: number
+                  example: 38.8951
+                longitude:
+                  type: number
+                  example: 38.8951
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Station'
+    delete:
+      tags:
+        - Stations
+      summary: Delete a station by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Station'
+  /buses:
+    get:
+      tags:
+        - Buses
+      summary: Get buses
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bus'
+    post:
+      tags:
+        - Buses
+      summary: Create a bus
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - MICROBUS
+                    - TROLLY
+                    - BUS
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bus'
+  '/buses/:id':
+    get:
+      tags:
+        - Buses
+      summary: Get bus by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bus'
+    patch:
+      tags:
+        - Buses
+      summary: Patch a bus by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - MICROBUS
+                    - TROLLY
+                    - BUS
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bus'
+    delete:
+      tags:
+        - Buses
+      summary: Delete a bus by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bus'
+  /routes:
+    get:
+      tags:
+        - Routes
+      summary: Get Routes
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Route'
+    post:
+      tags:
+        - Routes
+      summary: Create a route
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                busStopIds:
+                  type: array
+                  items:
+                    type: string
+                    example: 5c5d5ba647b04ac33778881f
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+  '/routes/:id':
+    get:
+      tags:
+        - Routes
+      summary: Get a route by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+    patch:
+      tags:
+        - Routes
+      summary: Patch a route by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                busStopIds:
+                  type: array
+                  items:
+                    type: string
+                    example: 5c5d5ba647b04ac33778881f
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+    delete:
+      tags:
+        - Routes
+      summary: Delete a route by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
 components:
   parameters:
     limitParam:
@@ -199,3 +484,47 @@ components:
         email:
           type: string
           example: example@mail.com
+    Station:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        readableAddress:
+          type: string
+          example: Somewhere
+        latitude:
+          type: number
+          example: 38.8951
+        longitude:
+          type: number
+          example: 38.8951
+    Bus:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        type:
+          type: string
+          enum:
+            - MICROBUS
+            - TROLLY
+            - BUS
+        seatCount:
+          type: number
+          enum:
+            - 20
+            - 30
+            - 40
+    Route:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        busStopIds:
+          type: array
+          items:
+            type: string
+            example: 5c5d5ba647b04ac33778881f

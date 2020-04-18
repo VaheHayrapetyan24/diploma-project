@@ -1,0 +1,40 @@
+get:
+  tags:
+    - Routes
+  summary: Get Routes
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Route'
+
+post:
+  tags:
+    - Routes
+  summary: Create a route
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            busStopIds:
+              type: array
+              items:
+                type: string
+                example: 5c5d5ba647b04ac33778881f
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Route'

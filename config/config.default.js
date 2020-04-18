@@ -16,6 +16,8 @@ module.exports = appInfo => {
     ignore: [ '/users/signup', '/users/login', '/public' ],
     adminRoutes: [
       { path: '/stations', methods: [ 'POST', 'PATCH', 'DELETE' ] },
+      { path: '/routes', methods: [ 'POST', 'PATCH', 'DELETE' ] },
+      { path: '/buses', methods: [ 'GET', 'POST', 'PATCH', 'DELETE' ] },
     ],
   };
 

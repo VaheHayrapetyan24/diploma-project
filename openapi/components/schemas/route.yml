@@ -1,0 +1,10 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: 5c5d5ba647b04ac33778881f
+  busStopIds:
+    type: array
+    items:
+      type: string
+      example: 5c5d5ba647b04ac33778881f

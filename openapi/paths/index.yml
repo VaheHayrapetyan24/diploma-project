@@ -9,3 +9,18 @@
   $ref: './users/changepassword.yml'
 /users/me:
   $ref: './users/me.yml'
+
+/stations:
+  $ref: './stations/stations.yml'
+/stations/:id:
+  $ref: './stations/stationById.yml'
+
+/buses:
+  $ref: './buses/buses.yml'
+/buses/:id:
+  $ref: './buses/busById.yml'
+
+/routes:
+  $ref: './routes/routes.yml'
+/routes/:id:
+  $ref: './routes/routeById.yml'

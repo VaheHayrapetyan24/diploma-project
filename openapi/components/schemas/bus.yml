@@ -1,0 +1,17 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: 5c5d5ba647b04ac33778881f
+  type:
+    type: string
+    enum:
+      - MICROBUS
+      - TROLLY
+      - BUS
+  seatCount:
+    type: number
+    enum:
+      - 20
+      - 30
+      - 40

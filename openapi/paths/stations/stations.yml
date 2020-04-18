@@ -1,0 +1,44 @@
+get:
+  tags:
+    - Stations
+  summary: Get stations
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Station'
+
+post:
+  tags:
+    - Stations
+  summary: Create a station
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            readableAddress:
+              type: string
+              example: Somewhere
+            latitude:
+              type: number
+              example: 38.8951
+            longitude:
+              type: number
+              example: 38.8951
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Station'

@@ -1,0 +1,56 @@
+get:
+  tags:
+    - Stations
+  summary: Get station by id
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Station'
+
+patch:
+  tags:
+    - Stations
+  summary: Patch a station by id
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            readableAddress:
+              type: string
+              example: Somewhere
+            latitude:
+              type: number
+              example: 38.8951
+            longitude:
+              type: number
+              example: 38.8951
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Station'
+
+delete:
+  tags:
+    - Stations
+  summary: Delete a station by id
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Station'

@@ -13,7 +13,13 @@ tags:
 - name: HealthCheck
   description: Check service availability
 - name: Users
-  description: User routes
+  description: User endpoints
+- name: Stations
+  description: Station endpoints
+- name: Buses
+  description: Bus endpoints
+- name: Routes
+  description: Route endpoints
 paths:
   $ref: './paths/index.yml'
 components:

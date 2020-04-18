@@ -2,7 +2,7 @@ const { omit } = require('lodash');
 const BaseController = require('./base/baseController');
 const { usersValidation } = require('../validation');
 
-class UserController extends BaseController {
+class UsersController extends BaseController {
   constructor(ctx) {
     super(ctx);
     this.model = ctx.model.Users;
@@ -44,4 +44,4 @@ class UserController extends BaseController {
   }
 }
 
-module.exports = UserController;
+module.exports = UsersController;

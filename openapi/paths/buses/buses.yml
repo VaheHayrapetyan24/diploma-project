@@ -1,0 +1,41 @@
+get:
+  tags:
+    - Buses
+  summary: Get buses
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Bus'
+
+post:
+  tags:
+    - Buses
+  summary: Create a bus
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - MICROBUS
+                - TROLLY
+                - BUS
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Bus'

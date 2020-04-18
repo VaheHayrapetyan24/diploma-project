@@ -2,7 +2,7 @@ const { app, assert } = require('egg-mock/bootstrap');
 
 let token;
 let userId;
-describe('app/controller/userController', () => {
+describe('app/controller/usersController', () => {
   describe('POST /users/signup', () => {
     it('should create user', async () => {
       const { status, body } = await app

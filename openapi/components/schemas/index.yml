@@ -2,3 +2,9 @@ HealthStatus:
   $ref: './healthStatus.yml'
 User:
   $ref: './user.yml'
+Station:
+  $ref: './station.yml'
+Bus:
+  $ref: './bus.yml'
+Route:
+  $ref: './route.yml'

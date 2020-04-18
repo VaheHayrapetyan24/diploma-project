@@ -1,0 +1,52 @@
+get:
+  tags:
+    - Routes
+  summary: Get a route by id
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Route'
+
+patch:
+  tags:
+    - Routes
+  summary: Patch a route by id
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            busStopIds:
+              type: array
+              items:
+                type: string
+                example: 5c5d5ba647b04ac33778881f
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Route'
+
+delete:
+  tags:
+    - Routes
+  summary: Delete a route by id
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Route'

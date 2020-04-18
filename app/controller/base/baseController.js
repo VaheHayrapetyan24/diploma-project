@@ -35,17 +35,9 @@ class BaseController extends Controller {
   }
 
   async getPage() {
-    const { service, ctx: { request } } = this;
+    const { service } = this;
     const { criteria, options } = this.checkAndBuildMongoQuery(this.ctx.query);
-
-    const contractId = request.get('contract-id');
-
-    const query = criteria;
-    if (this.allowedQuery.fields.includes('contractId')) {
-      Object.assign(query, { contractId });
-    }
-
-    return service.paginationService.findAll(this.model, query, options);
+    return service.paginationService.findAll(this.model, criteria, options);
   }
 
   async index() {
