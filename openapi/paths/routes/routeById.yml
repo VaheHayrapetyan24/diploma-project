@@ -24,7 +24,7 @@ patch:
         schema:
           type: object
           properties:
-            busStopIds:
+            stationIds:
               type: array
               items:
                 type: string
