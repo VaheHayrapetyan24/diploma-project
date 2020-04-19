@@ -1,6 +1,6 @@
 module.exports = ({ mongoose }) => {
   const RoutesSchema = new mongoose.Schema({
-    busStopIds: [{ type: mongoose.Types.ObjectId, ref: 'busStops' }],
+    stationIds: [{ type: mongoose.Types.ObjectId, ref: 'stations' }],
   });
 
   return new mongoose.model('routes', RoutesSchema);

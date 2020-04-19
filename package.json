@@ -42,7 +42,7 @@
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
+    "cov": "EGG_SERVER_ENV=test egg-bin cov --nyc=\"-r text\"",
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
