@@ -72,23 +72,23 @@ class BaseController extends Controller {
       limit: requestQuery.limit,
     };
 
-    if (requestQuery.search) {
-      query.criteria = {
-        ...query.criteria,
-        $text: { $search: requestQuery.search },
-      };
-      query.options = {
-        ...query.options,
-        fields: {
-          ...(query.options.fields || {}),
-          score: { $meta: 'textScore' },
-        },
-        sort: {
-          ...(query.options.sort || {}),
-          score: { $meta: 'textScore' },
-        },
-      };
-    }
+    // if (requestQuery.search) { // todo text search sucks ass
+    //   query.criteria = {
+    //     ...query.criteria,
+    //     $text: { $search: requestQuery.search },
+    //   };
+    //   query.options = {
+    //     ...query.options,
+    //     fields: {
+    //       ...(query.options.fields || {}),
+    //       score: { $meta: 'textScore' },
+    //     },
+    //     sort: {
+    //       ...(query.options.sort || {}),
+    //       score: { $meta: 'textScore' },
+    //     },
+    //   };
+    // }
 
     return query;
   }

@@ -8,8 +8,8 @@ module.exports = app => {
 
   router.resources('/stations', controller.stationsController);
   router.resources('/buses', controller.busesController);
-
   router.resources('/routes', controller.routesController);
+  router.resources('/trips', controller.tripsControlelr);
 
   router.get('/public/documentation', controller.documentationController.index);
 };
