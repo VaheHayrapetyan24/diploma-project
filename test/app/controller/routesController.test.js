@@ -176,8 +176,8 @@ describe('app/controller/stationsController', () => {
         .set('Authorization', token);
 
       assert.equal(status, 200);
-      const station = await app.model.Routes.findById(createdRoute._id);
-      assert(!station);
+      const trip = await app.model.Routes.findById(createdRoute._id);
+      assert(!trip);
     });
   });
 

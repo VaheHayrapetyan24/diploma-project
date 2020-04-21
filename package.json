@@ -13,11 +13,12 @@
     "egg-jwt": "^3.1.7",
     "egg-mongoose": "^3.2.0",
     "egg-scripts": "^2.11.0",
-    "egg-validate": "^2.0.2",
     "egg-static": "^2.2.0",
+    "egg-validate": "^2.0.2",
     "egg-view-ejs": "^2.0.0",
     "ejs": "^2.7.1",
     "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "mongoose": "^5.8.11",
     "password-generator": "^2.2.3",
     "query-to-mongo": "^0.10.1"

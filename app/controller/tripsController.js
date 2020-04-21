@@ -1,4 +1,5 @@
 const ApiController = require('./base/apiController');
+const moment = require('moment');
 const { tripsValidation } = require('../validation');
 
 class TripsController extends ApiController {
@@ -14,14 +15,18 @@ class TripsController extends ApiController {
     const { request: { body } } = this.ctx;
     this.validate(tripsValidation.create);
     await this.checkExistingIds(body.routeId, body.busId);
-    return super.create();
+    body.dateTime = moment(body.dateTime, 'YYYY-MM-DD HH:MM:SS').toDate();
+    const entity = await this.mainService.create(body);
+    this.success(entity);
   }
 
   async update() {
-    const { request: { body } } = this.ctx;
+    const { request: { body }, params: { id } } = this.ctx;
     this.validate(tripsValidation.update);
     await this.checkExistingIds(body.routeId, body.busId);
-    return super.update();
+    body.dateTime = moment(body.dateTime, 'YYYY-MM-DD HH:MM:SS').toDate();
+    const entity = await this.mainService.updateById(id, body);
+    this.success(entity);
   }
 
   async checkExistingIds(routeId, busId) {

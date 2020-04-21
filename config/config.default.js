@@ -18,6 +18,7 @@ module.exports = appInfo => {
       { path: '/stations', methods: [ 'POST', 'PATCH', 'DELETE' ] },
       { path: '/routes', methods: [ 'POST', 'PATCH', 'DELETE' ] },
       { path: '/buses', methods: [ 'GET', 'POST', 'PATCH', 'DELETE' ] },
+      { path: '/trips', methods: [ 'POST', 'PATCH', 'DELETE' ] },
     ],
   };
 

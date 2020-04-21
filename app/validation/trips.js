@@ -1,12 +1,12 @@
 const create = {
   routeId: 'mongodbId',
   busId: 'mongodbId',
-  dateTime: 'date',
+  dateTime: 'dateTime',
 };
 const update = {
   routeId: 'mongodbId?',
   busId: 'mongodbId?',
-  dateTime: 'date?',
+  dateTime: 'dateTime?',
 };
 
 module.exports = {
