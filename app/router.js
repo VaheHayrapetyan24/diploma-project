@@ -11,5 +11,7 @@ module.exports = app => {
   router.resources('/routes', controller.routesController);
   router.resources('/trips', controller.tripsController);
 
+  router.get('/seats/free-seats', controller.seatsController.findFreeSeats);
+
   router.get('/public/documentation', controller.documentationController.index);
 };
