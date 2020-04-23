@@ -8,10 +8,10 @@ class SeatsController extends BaseController {
     this.name = 'seat';
   }
 
-  async findFreeSeats() {
+  async findFreeSeats() { // todo move this to trips controller
     // todo validate for seatfrom, seatto
-    const { body } = this.ctx.request;
-    const { tripId, stationFrom, stationTo } = body;
+    const { query } = this.ctx.request;
+    const { tripId, stationFrom, stationTo } = query;
     const freeSeats = await this.mainService.findFreeSeats(tripId, stationFrom, stationTo);
     this.success(freeSeats);
   }

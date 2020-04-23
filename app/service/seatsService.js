@@ -25,12 +25,12 @@ class SeatsService extends BaseService {
 
   async findFreeSeats(tripId, stationFrom, stationTo) {
     const { tripsService } = this.ctx.service;
-    const { trip } = await tripsService.findByIdOrThrow(tripId);
+    const trip = await tripsService.findByIdWithPopulatedIds(tripId);
     const { stationIds } = trip.routeId;
     const bus = trip.busId;
     const {
       beforeStationTo,
-      afterStationFrom
+      afterStationFrom,
     } = this.getRangeOfStationIds(stationIds, stationFrom, stationTo);
     const takenSeats = await this.findTakenSeats(tripId, beforeStationTo, afterStationFrom);
     return this.getArrayOfFreeSeats(bus, takenSeats);
@@ -51,14 +51,19 @@ class SeatsService extends BaseService {
     const seatCount = busesService.getSeatCountByType(bus.type);
     const resultArray = [];
     let i = 1;
-    for (let j = 0; i <= seatCount, j < takenSeats.length; ++i) {
+    /* eslint-disable no-sequences */
+    for (let j = 0; i <= seatCount, j < takenSeats.length;) {
       if (i === takenSeats[j].seatNumber) {
-        ++j;
+        if (++j === takenSeats.length) {
+          ++i;
+          break;
+        }
         continue;
       }
       resultArray.push(i);
+      ++i;
     }
-    while(i <= seatCount) {
+    while (i <= seatCount) {
       resultArray.push(i);
       ++i;
     }
@@ -67,7 +72,7 @@ class SeatsService extends BaseService {
 
   getRangeOfStationIds(stationIds, stationFrom, stationTo) {
     const beforeStationTo = stationIds.slice(0, this.findIdIndex(stationIds, stationTo));
-    const afterStationFrom = stationIds.slice(this.findIdIndex(stationIds, stationFrom));
+    const afterStationFrom = stationIds.slice(this.findIdIndex(stationIds, stationFrom) + 1);
     return {
       beforeStationTo,
       afterStationFrom,
