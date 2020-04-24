@@ -1,4 +1,5 @@
 const BaseController = require('./base/baseController');
+const { findFreeSeats, reserveSeat } = require('../validation/seats');
 
 class SeatsController extends BaseController {
   constructor(ctx) {
@@ -8,12 +9,28 @@ class SeatsController extends BaseController {
     this.name = 'seat';
   }
 
-  async findFreeSeats() { // todo move this to trips controller
-    // todo validate for seatfrom, seatto
+  async findFreeSeats() {
     const { query } = this.ctx.request;
+    this.validate(findFreeSeats, query);
     const { tripId, stationFrom, stationTo } = query;
-    const freeSeats = await this.mainService.findFreeSeats(tripId, stationFrom, stationTo);
+    const trip = await this.getPopulatedTrip(tripId);
+    const freeSeats = await this.mainService.findFreeSeats(trip, stationFrom, stationTo);
     this.success(freeSeats);
+  }
+
+  async reserveSeat() {
+    this.validate(reserveSeat);
+    const { user } = this.ctx.state;
+    const { body:
+      { tripId, stationFrom, stationTo, seatNumber } } = this.ctx.request;
+    const trip = await this.getPopulatedTrip(tripId);
+    const seat = await this.mainService.reserveSeat(user, trip, stationFrom, stationTo, seatNumber);
+    this.success(seat);
+  }
+
+  async getPopulatedTrip(tripId) {
+    const { tripsService } = this.ctx.service;
+    return tripsService.findByIdWithPopulatedIds(tripId);
   }
 }
 

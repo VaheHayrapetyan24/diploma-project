@@ -1,5 +1,6 @@
-const BaseService = require('./base/baseService');
 const _ = require('lodash');
+const BaseService = require('./base/baseService');
+const HttpError = require('../errors/httpError');
 
 class SeatsService extends BaseService {
   constructor(ctx) {
@@ -8,66 +9,68 @@ class SeatsService extends BaseService {
     this.name = 'seat';
   }
 
-  async reserveSeat(userId, tripId, stationFrom, stationTo, seatNumber) {
-    await this.checkIfSeatIsFree(tripId, stationFrom, stationTo, seatNumber);
+  async reserveSeat({ _id: userId }, trip, stationFrom, stationTo, seatNumber) {
+    await this.checkIfSeatIsFree(trip, stationFrom, stationTo, seatNumber);
     return this.create({
-      tripId,
+      userId,
+      tripId: trip._id,
       stationFrom,
       stationTo,
       seatNumber,
     });
   }
 
-  async checkIfSeatIsFree(tripId, stationFrom, stationTo, seatNumber) {
-    const freeSeats = await this.findFreeSeats(tripId, stationFrom, stationTo);
-    return freeSeats.indexOf(seatNumber) !== -1;
+  async checkIfSeatIsFree(trip, stationFrom, stationTo, seatNumber) {
+    const busSeatCount = this.getBusSeatCount(trip.busId);
+    if (seatNumber > busSeatCount) throw new HttpError(422, 'Invalid seat number');
+    const freeSeats = await this.findFreeSeats(trip, stationFrom, stationTo);
+    if (freeSeats.indexOf(seatNumber) !== -1) return;
+    throw new HttpError(400, 'Seat already taken');
   }
 
-  async findFreeSeats(tripId, stationFrom, stationTo) {
-    const { tripsService } = this.ctx.service;
-    const trip = await tripsService.findByIdWithPopulatedIds(tripId);
-    const { stationIds } = trip.routeId;
-    const bus = trip.busId;
+  async findFreeSeats(trip, stationFrom, stationTo) {
+    this.validateStationIds(trip, stationFrom, stationTo);
+    const { routeId: { stationIds }, busId: bus } = trip;
     const {
       beforeStationTo,
       afterStationFrom,
     } = this.getRangeOfStationIds(stationIds, stationFrom, stationTo);
-    const takenSeats = await this.findTakenSeats(tripId, beforeStationTo, afterStationFrom);
-    return this.getArrayOfFreeSeats(bus, takenSeats);
+    const takenSeatNumbers = await this.findTakenSeatNumbers(trip._id, beforeStationTo, afterStationFrom);
+    return this.getArrayOfFreeSeats(bus, takenSeatNumbers);
   }
 
-  async findTakenSeats(tripId, beforeStationTo, afterStationFrom) {
-    return this.model
+  async findTakenSeatNumbers(tripId, beforeStationTo, afterStationFrom) {
+    const seats = await this.model
       .find({
         tripId,
         stationFrom: { $in: beforeStationTo },
         stationTo: { $in: afterStationFrom },
       })
-      .sort({ seatNumber: 1 });
+      .distinct('seatNumber');
+    return seats.sort();
   }
 
   getArrayOfFreeSeats(bus, takenSeats) {
-    const { busesService } = this.ctx.service;
-    const seatCount = busesService.getSeatCountByType(bus.type);
+    const seatCount = this.getBusSeatCount(bus);
     const resultArray = [];
-    let i = 1;
-    /* eslint-disable no-sequences */
-    for (let j = 0; i <= seatCount, j < takenSeats.length;) {
-      if (i === takenSeats[j].seatNumber) {
-        if (++j === takenSeats.length) {
-          ++i;
-          break;
-        }
+    for (let i = 1, j = 0; i <= seatCount; ++i) {
+      if (i === takenSeats[j]) {
+        ++j;
         continue;
       }
       resultArray.push(i);
-      ++i;
-    }
-    while (i <= seatCount) {
-      resultArray.push(i);
-      ++i;
     }
     return resultArray;
+  }
+
+  validateStationIds({ routeId: route }, stationFrom, stationTo) {
+    const fromIndex = this.findIdIndex(route.stationIds, stationFrom);
+    const toIndex = this.findIdIndex(route.stationIds, stationTo);
+    if (fromIndex === -1 || toIndex === -1) {
+      throw new HttpError(400, 'Station ids are not from specified trip');
+    }
+    if (fromIndex < toIndex) return;
+    throw new HttpError(400, 'Station from should be before station to');
   }
 
   getRangeOfStationIds(stationIds, stationFrom, stationTo) {
@@ -77,6 +80,11 @@ class SeatsService extends BaseService {
       beforeStationTo,
       afterStationFrom,
     };
+  }
+
+  getBusSeatCount(bus) {
+    const { busesService } = this.ctx.service;
+    return busesService.getSeatCountByType(bus.type);
   }
 
   findIdIndex(array, id) {

@@ -11,7 +11,7 @@ class TripsController extends ApiController {
     this.bodyValidation = tripsValidation;
   }
 
-  async create() {
+  async create() { // todo create a reverse trip from route
     const { request: { body } } = this.ctx;
     this.validate(tripsValidation.create);
     await this.checkExistingIds(body.routeId, body.busId);

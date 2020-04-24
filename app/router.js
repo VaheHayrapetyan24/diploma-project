@@ -12,6 +12,7 @@ module.exports = app => {
   router.resources('/trips', controller.tripsController);
 
   router.get('/seats/free-seats', controller.seatsController.findFreeSeats);
+  router.post('/seats', controller.seatsController.reserveSeat);
 
   router.get('/public/documentation', controller.documentationController.index);
 };

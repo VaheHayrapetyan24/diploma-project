@@ -3,6 +3,7 @@ const stationsValidation = require('./stations');
 const busesValidation = require('./buses');
 const routesValidation = require('./routes');
 const tripsValidation = require('./trips');
+const seatsValidation = require('./seats');
 
 module.exports = {
   usersValidation,
@@ -10,4 +11,5 @@ module.exports = {
   busesValidation,
   routesValidation,
   tripsValidation,
+  seatsValidation,
 };
