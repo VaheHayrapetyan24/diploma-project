@@ -1,0 +1,31 @@
+post:
+  tags:
+    - Seats
+  summary: Reserve a seat
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            tripId:
+              type: string
+              example: 5c5d5ba647b04ac33778881f
+            stationFrom:
+              type: string
+              example: 5c5d5ba647b04ac33778881f
+            stationTo:
+              type: string
+              example: 5c5d5ba647b04ac33778881f
+            seatNumber:
+              type: number
+              example: 13
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Seat'

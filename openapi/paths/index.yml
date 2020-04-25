@@ -24,3 +24,13 @@
   $ref: './routes/routes.yml'
 /routes/:id:
   $ref: './routes/routeById.yml'
+
+/trips:
+  $ref: './trips/trips.yml'
+/trips/:id:
+  $ref: './trips/tripById.yml'
+
+/seats/free-seats:
+  $ref: './seats/freeSeats.yml'
+/seats:
+  $ref: './seats/seats.yml'

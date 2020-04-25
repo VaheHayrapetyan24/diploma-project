@@ -8,3 +8,7 @@ Bus:
   $ref: './bus.yml'
 Route:
   $ref: './route.yml'
+Trip:
+  $ref: './trip.yml'
+Seat:
+  $ref: './seat.yml'

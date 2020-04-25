@@ -1,0 +1,14 @@
+type: object
+properties:
+  _id:
+    type: string
+    example: 5c5d5ba647b04ac33778881f
+  routeId:
+    type: string
+    example: 5c5d5ba647b04ac33778881f
+  busId:
+    type: string
+    example: 5c5d5ba647b04ac33778881f
+  dateTime:
+    type: date
+    example: 2020-10-10 10:10:20

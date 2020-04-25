@@ -12,8 +12,8 @@ const reserveSeat = {
     type: 'int',
     min: 1,
     max: 40,
-  }
-}
+  },
+};
 
 module.exports = {
   findFreeSeats,

@@ -1,0 +1,44 @@
+get:
+  tags:
+    - Trips
+  summary: Get trips
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Trip'
+
+post:
+  tags:
+    - Trips
+  summary: Create a trip
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            routeId:
+              type: string
+              example: 5c5d5ba647b04ac33778881f
+            busId:
+              type: string
+              example: 5c5d5ba647b04ac33778881f
+            dateTime:
+              type: date
+              example: 2020-10-10 10:10:20
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Trip'

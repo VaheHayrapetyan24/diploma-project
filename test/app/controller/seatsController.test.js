@@ -133,7 +133,7 @@ describe('app/controller/seatsController', () => {
       const token = await login(app, 'U');
       const { status } = await app
         .httpRequest()
-        .post(`/seats`)
+        .post('/seats')
         .set('Authorization', token)
         .send({
           stationFrom: stationIds[0],
@@ -148,7 +148,7 @@ describe('app/controller/seatsController', () => {
       const token = await login(app, 'U');
       const { status } = await app
         .httpRequest()
-        .post(`/seats`)
+        .post('/seats')
         .set('Authorization', token)
         .send({
           tripId: trip._id,
@@ -164,7 +164,7 @@ describe('app/controller/seatsController', () => {
       const token = await login(app, 'U');
       const { status } = await app
         .httpRequest()
-        .post(`/seats`)
+        .post('/seats')
         .set('Authorization', token)
         .send({
           tripId: trip._id,
@@ -180,7 +180,7 @@ describe('app/controller/seatsController', () => {
       const token = await login(app, 'U');
       const { status } = await app
         .httpRequest()
-        .post(`/seats`)
+        .post('/seats')
         .set('Authorization', token)
         .send({
           tripId: trip._id,
@@ -196,7 +196,7 @@ describe('app/controller/seatsController', () => {
       const token = await login(app, 'U');
       const { status } = await app
         .httpRequest()
-        .post(`/seats`)
+        .post('/seats')
         .set('Authorization', token)
         .send({
           tripId: trip._id,
@@ -212,7 +212,7 @@ describe('app/controller/seatsController', () => {
       const token = await login(app, 'U');
       const { status, body } = await app
         .httpRequest()
-        .post(`/seats`)
+        .post('/seats')
         .set('Authorization', token)
         .send({
           tripId: trip._id,
@@ -226,7 +226,6 @@ describe('app/controller/seatsController', () => {
       assert.equal(body.seatNumber, 3);
     });
   });
-
 
 
   after(async () => {

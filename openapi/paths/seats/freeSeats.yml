@@ -1,0 +1,40 @@
+get:
+  tags:
+    - Seats
+  summary: Get available seats
+  parameters:
+    - $ref: '#/components/parameters/authorization'
+    - tripId:
+      name: tripId
+      in: query
+      required: true
+      description: trip id
+      schema:
+        type: string
+        example: 5c5d5ba647b04ac33778881f
+    - stationFrom:
+      name: stationFrom
+      in: query
+      required: true
+      description: starting station id
+      schema:
+        type: string
+        example: 5c5d5ba647b04ac33778881f
+    - stationTo:
+      name: stationTo
+      in: query
+      required: true
+      description: destination station id
+      schema:
+        type: string
+        example: 5c5d5ba647b04ac33778881f
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: number
+              example: 4

@@ -20,6 +20,10 @@ tags:
   description: Bus endpoints
 - name: Routes
   description: Route endpoints
+- name: Seats
+  description: Seat endpoints
+- name: Trips
+  description: Trip endpoints
 paths:
   $ref: './paths/index.yml'
 components:

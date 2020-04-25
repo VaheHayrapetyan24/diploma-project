@@ -20,6 +20,10 @@ tags:
     description: Bus endpoints
   - name: Routes
     description: Route endpoints
+  - name: Seats
+    description: Seat endpoints
+  - name: Trips
+    description: Trip endpoints
 paths:
   /health:
     get:
@@ -411,6 +415,178 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Route'
+  /trips:
+    get:
+      tags:
+        - Trips
+      summary: Get trips
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trip'
+    post:
+      tags:
+        - Trips
+      summary: Create a trip
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                routeId:
+                  type: string
+                  example: 5c5d5ba647b04ac33778881f
+                busId:
+                  type: string
+                  example: 5c5d5ba647b04ac33778881f
+                dateTime:
+                  type: date
+                  example: '2020-10-10T10:10:20.000Z'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trip'
+  '/trips/:id':
+    get:
+      tags:
+        - Trips
+      summary: Get trip by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trip'
+    patch:
+      tags:
+        - Trips
+      summary: Patch a trip by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                routeId:
+                  type: string
+                  example: 5c5d5ba647b04ac33778881f
+                busId:
+                  type: string
+                  example: 5c5d5ba647b04ac33778881f
+                dateTime:
+                  type: date
+                  example: '2020-10-10T10:10:20.000Z'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trip'
+    delete:
+      tags:
+        - Trips
+      summary: Delete a trip by id
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trip'
+  /seats/free-seats:
+    get:
+      tags:
+        - Seats
+      summary: Get available seats
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+        - tripId: null
+          name: tripId
+          in: query
+          required: true
+          description: trip id
+          schema:
+            type: string
+            example: 5c5d5ba647b04ac33778881f
+        - stationFrom: null
+          name: stationFrom
+          in: query
+          required: true
+          description: starting station id
+          schema:
+            type: string
+            example: 5c5d5ba647b04ac33778881f
+        - stationTo: null
+          name: stationTo
+          in: query
+          required: true
+          description: destination station id
+          schema:
+            type: string
+            example: 5c5d5ba647b04ac33778881f
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: number
+                  example: 4
+  /seats:
+    post:
+      tags:
+        - Seats
+      summary: Reserve a seat
+      parameters:
+        - $ref: '#/components/parameters/authorization'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tripId:
+                  type: string
+                  example: 5c5d5ba647b04ac33778881f
+                stationFrom:
+                  type: string
+                  example: 5c5d5ba647b04ac33778881f
+                stationTo:
+                  type: string
+                  example: 5c5d5ba647b04ac33778881f
+                seatNumber:
+                  type: number
+                  example: 13
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Seat'
 components:
   parameters:
     limitParam:
@@ -528,3 +704,39 @@ components:
           items:
             type: string
             example: 5c5d5ba647b04ac33778881f
+    Trip:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        routeId:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        busId:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        dateTime:
+          type: date
+          example: '2020-10-10T10:10:20.000Z'
+    Seat:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        tripId:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        userId:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        stationFrom:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        stationTo:
+          type: string
+          example: 5c5d5ba647b04ac33778881f
+        seatNumber:
+          type: number
+          example: 13
